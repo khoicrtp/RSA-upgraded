@@ -1,0 +1,10 @@
+Viết chương trình thực hiện ba nhiệm vụ sau:
+1. Sinh cặp khóa RSA (gồm 1 khóa công khai, 1 khóa bí mật tương ứng) và yêu cầu người dùng nhập tên thư mục
+muốn lưu trữ khóa. Sau đó lưu khóa công khai vào file rsa_pub.txt và lưu khóa bí mật vào file rsa.txt tại thư
+mục đó.
+2. Mã hóa đoạn văn bản: Người dùng nhập vào tên file có định dạng .txt, sau đó yêu cầu người dùng nhập tên file
+khóa công khai, tiến hành mã hóa nội dung file .txt của người dùng bằng khóa vừa nhận được. Nội dung mã
+hóa lưu vào file encrypted.txt ngay tại thư mục chứa file của người dùng.
+3. Giải mã đoạn văn bản: Người dùng nhập vào tên file có định dạng .txt, sau đó yêu cầu người dùng nhập tên file
+khóa bí mật, tiến hành giải mã nội dung file .txt của người dùng bằng khóa vừa nhận được. Nội dung giải mã
+lưu vào file decrypted.txt ngay tại thư mục chứa file của người dùng.
