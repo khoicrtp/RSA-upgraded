@@ -2,6 +2,9 @@ import random
 import math
 import decimal
 import os
+import warnings
+
+warnings.filterwarnings("ignore")
 
 decimal.getcontext().prec = 10000
 
@@ -118,15 +121,21 @@ def formalCipher(cipher, n):
 def encrypt(publicKey, message):
     # tao ciphertext bang cach ma hoa moi ki tu trong plaintext theo gia tri ascii c=(m^e)%n
     # do dai cua moi phan tu trong ciphertext = do dai cua n
-    cipher = []
-    for i in range(len(message)):
-        cipher.append(decimal.Context().power(
-            ord(message[i]), publicKey[0], publicKey[1]))
-        #cipher.append((ord(message[i]) ** publicKey[0]) % publicKey[1])
-    #print("CIPHER: ", cipher)
-    res = formalCipher(cipher, publicKey[1])
+    try:
+        cipher = []
+        for i in range(len(message)):
+            cipher.append(decimal.Context().power(
+                ord(message[i]), publicKey[0], publicKey[1]))
+            #cipher.append((ord(message[i]) ** publicKey[0]) % publicKey[1])
+        #print("CIPHER: ", cipher)
+        res = formalCipher(cipher, publicKey[1])
+    except:
+        print("SOMETHING WENT WRONG!")
+        return 0
+    
     f = open("encrypted.txt", "w+")
     f.write(res)
+    f.close()
     return res
 
 
@@ -144,57 +153,81 @@ def formalMessage(plain):
 
 
 def collectCipherArray(cipher, n):
-    maxLen = numLen(n)
-    temp = ""
-    res = []
-    for i in range(0, len(cipher), maxLen):
-        for j in range(i, i+maxLen):
-            temp += cipher[j]
-        res.append(int(temp))
+    try:
+        maxLen = numLen(n)
         temp = ""
+        res = []
+        for i in range(0, len(cipher), maxLen):
+            for j in range(i, i+maxLen):
+                temp += cipher[j]
+            res.append(int(temp))
+            temp = ""
+    except:
+        print("SOMETHING WENT WRONG!")
     return res
 
 
 def decrypt(privateKey, cipher):
     # tao phaintext bang cach giai ma tung gia tri ascii cua moi chu trong ciphertext m=(c^d)%n
     # do dai cua moi phan tu trong ciphertext = do dai cua n
-    cipherArray = collectCipherArray(cipher, privateKey[1])
-    #print("COLLECTED CIPHER:", cipherArray)
-    plain = []
-    for i in range(len(cipherArray)):
-        x = decimal.Decimal(cipherArray[i])
-        x = decimal.Context().power(x, privateKey[0], privateKey[1])
-        plain.append(chr(x))
-    #print("PLAIN: ", plain)
-    res = formalMessage(plain)
-
+    try:
+        cipherArray = collectCipherArray(cipher, privateKey[1])
+        #print("COLLECTED CIPHER:", cipherArray)
+        plain = []
+        for i in range(len(cipherArray)):
+            x = decimal.Decimal(cipherArray[i])
+            x = decimal.Context().power(x, privateKey[0], privateKey[1])
+            plain.append(chr(x))
+        #print("PLAIN: ", plain)
+        res = formalMessage(plain)
+    except:
+        print("SOMETHING WENT WRONG!")
+        return 0
     f = open("decrypted.txt", "w+")
     f.write(res)
+    f.close()
     return res
 
 
+def fileCheck(filename):
+    try:
+      open(filename, "r")
+      return 1
+    except IOError:
+      print("CAN NOT FIND SPECIFIC FILE")
+      return 0
+
+
 def readKey(filename):
-    f = open(filename, "r")
+    while(fileCheck(filename)==0):
+        print("Please check the filename again!")
+        filename=input("Filename: ")
+    f = open(filename, "rU")
     temp = f.readlines()
     f.close()
     return int(temp[0]), int(temp[1])
 
 
 def readTxt(filename):
-    f = open(filename, "r")
+    while(fileCheck(filename)==0):
+        print("Please check the filename again!")
+        filename=input("Filename: ")
+    f = open(filename, "rU")
     temp = f.read()
     f.close()
     return temp
 
 
 if __name__ == '__main__':
-    #print("--------------GENERATING KEY PAIR--------------")
-    # keyGen(8)
-    # print("--------------COLLECTING KEY PAIR--------------")
-    # publicKey = readKey("rsa_pub.txt")
-    # privateKey = readKey("rsa.txt")
-    # print("PUBLIC KEY: ", publicKey)
-    # print("PRIVATE KEY: ", privateKey)
+    print("--------------GENERATING KEY PAIR--------------")
+    keyGen(6)
+    print("--------------COLLECTING KEY PAIR--------------")
+    publicKey = readKey("rsa_pub.txt")
+    privateKey = readKey("rsa.txt")
+    print("PUBLIC KEY: ", publicKey)
+    print("PRIVATE KEY: ", privateKey)
+    print("Your public key has stored in file rsa_pub.txt")
+    print("Your private key has stored in file rsa.txt\n")
 
     print("--------------ENCRYPTING WITH PUBLIC KEY-------------- ")
     filename = input("Input filename to be encrypted: ")
@@ -202,13 +235,15 @@ if __name__ == '__main__':
     #print("MESSAGE: ", message)
     publicFile = input("Input filename of your public key: ")
     publicKey = readKey(publicFile)
-    encryptedMessage = encrypt(publicKey, message)
-    #print("ENCRYPTED MESSAGE: ", encryptedMessage)
+    encrypt(publicKey, message)
+    print("Your encrypted message has stored in file encrypted.txt\n")
+
     print("--------------DECRYPTING WITH PRIVATE KEY--------------")
     filename2 = input("Input filename to be decrypted: ")
-    message2 = readTxt(filename2)
-    #print("MESSAGE: ", message)
     privateFile = input("Input filename of your private key: ")
     privateKey = readKey(privateFile)
-    print("Original message is:")
+    encryptedMessage = readTxt(filename2)
+    print("--------------Decrypted message is:")
     print(decrypt(privateKey, encryptedMessage))
+    print("\n")
+    stop=input()

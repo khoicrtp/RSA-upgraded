@@ -1,3 +1,4 @@
+I Thực hành
 Viết chương trình thực hiện ba nhiệm vụ sau:
 1. Sinh cặp khóa RSA (gồm 1 khóa công khai, 1 khóa bí mật tương ứng) và yêu cầu người dùng nhập tên thư mục
 muốn lưu trữ khóa. Sau đó lưu khóa công khai vào file rsa_pub.txt và lưu khóa bí mật vào file rsa.txt tại thư
@@ -8,3 +9,17 @@ hóa lưu vào file encrypted.txt ngay tại thư mục chứa file của ngư�
 3. Giải mã đoạn văn bản: Người dùng nhập vào tên file có định dạng .txt, sau đó yêu cầu người dùng nhập tên file
 khóa bí mật, tiến hành giải mã nội dung file .txt của người dùng bằng khóa vừa nhận được. Nội dung giải mã
 lưu vào file decrypted.txt ngay tại thư mục chứa file của người dùng.
+II Các quy định nộp bài
+II.1 Các quy định chung
+1. Bài tập cá nhân.
+2. Phần nộp bài sẽ gồm có 2 phần là mã nguồn (lưu trong thư mục Source) và báo cáo (lưu trong thư mục Report),
+được nén thành 1 file bằng định dạng ZIP có tên dạng như sau: MSSV.zip
+II.2 Mã nguồn
+1. Mã nguồn không thể biên dịch (báo lỗi biên dịch như sai cú pháp) hoặc không thể chạy được (báo các lỗi như lỗi
+runtime, sai logic chương trình): 0 điểm.
+2. Các hành vi gian lận liên quan đến mã nguồn (sao chép mã nguồn giữa các nhóm, sao chép mã nguồn trên Internet,
+...): 0 điểm.
+II.3 Báo cáo
+Phần báo cáo cần đảm bảo tối thiểu có các phần sau:
+1. Trình bày cách biên dịch và chạy mã nguồn. Giải thích cụ thể thuật toán và trình bày mã giả thuật toán. Trường
+hợp mã giả không khợp với mã nguồn: 0 điểm.
