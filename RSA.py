@@ -167,7 +167,7 @@ def decrypt(privateKey, cipher):
         plain.append(chr(x))
     #print("PLAIN: ", plain)
     res = formalMessage(plain)
-    
+
     f = open("decrypted.txt", "w+")
     f.write(res)
     return res
@@ -179,23 +179,24 @@ def readKey(filename):
     f.close()
     return int(temp[0]), int(temp[1])
 
+
 def readTxt(filename):
     f = open(filename, "r")
     temp = f.read()
     f.close()
     return temp
 
+
 if __name__ == '__main__':
     #print("--------------GENERATING KEY PAIR--------------")
-    #keyGen(8)
-    print("--------------COLLECTING KEY PAIR--------------")
-    publicKey = readKey("rsa_pub.txt")
-    privateKey = readKey("rsa.txt")
-    print("PUBLIC KEY: ", publicKey)
-    print("PRIVATE KEY: ", privateKey)
-    
+    # keyGen(8)
+    # print("--------------COLLECTING KEY PAIR--------------")
+    # publicKey = readKey("rsa_pub.txt")
+    # privateKey = readKey("rsa.txt")
+    # print("PUBLIC KEY: ", publicKey)
+    # print("PRIVATE KEY: ", privateKey)
+
     print("--------------ENCRYPTING WITH PUBLIC KEY-------------- ")
-    #message = "VERY HELLO WORLD"
     filename = input("Input filename to be encrypted: ")
     message = readTxt(filename)
     #print("MESSAGE: ", message)
