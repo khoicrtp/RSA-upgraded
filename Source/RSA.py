@@ -66,10 +66,10 @@ def generatePrime(numSize=2):
     return x
 
 
-def calcE(phi, n):
+def calcE(phi):
     for e in range(3, int(phi), 2):
         if isPrime(e):
-            if isCoPrime(phi, e) == True:
+            if isCoPrime(phi, e):
                 return e
 
 
@@ -86,7 +86,7 @@ def keyGen(numSize):
     print("n: ", n)
     phi = (p-1)*(q-1)
     print("phi: ", phi)
-    e = calcE(phi, n)
+    e = calcE(phi)
     print("e: ", e)
     # print(gcd(phi,e))
     d = gcd(phi, e)[2]
@@ -183,7 +183,7 @@ def decrypt(privateKey, cipher):
     except:
         print("SOMETHING WENT WRONG!")
         return 0
-    f = open("decrypted.txt", "w+")
+    f = open("decrypted.txt", "w+", encoding='utf-8')
     f.write(res)
     f.close()
     return res
@@ -212,7 +212,7 @@ def readTxt(filename):
     while(fileCheck(filename)==0):
         print("Please check the filename again!")
         filename=input("Filename: ")
-    f = open(filename, "rU")
+    f = open(filename, "rU", encoding='utf-8')
     temp = f.read()
     f.close()
     return temp
@@ -220,7 +220,9 @@ def readTxt(filename):
 
 if __name__ == '__main__':
     print("--------------GENERATING KEY PAIR--------------")
-    keyGen(6)
+    keyGen(6) 
+    #tang chi so o day co the lam tang thoi gian tạo key pair
+    #nhung se tang do bao mat cho cap khoa
     print("--------------COLLECTING KEY PAIR--------------")
     publicKey = readKey("rsa_pub.txt")
     privateKey = readKey("rsa.txt")
@@ -246,4 +248,5 @@ if __name__ == '__main__':
     print("--------------Decrypted message is:")
     print(decrypt(privateKey, encryptedMessage))
     print("\n")
+    
     stop=input()
